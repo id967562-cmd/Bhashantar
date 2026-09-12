@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bhashantar — Jharkhand Tribal Languages Suite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">Bhashant<span>a</span>r</div>
+    <div class="navlinks">
+      <a href="#problem">Why</a>
+      <a href="#how">How it works</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#get-in-touch">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+
+    <h1>Learn first in the words of Jharkhand.</h1>
+    <p class="hero-sub">An offline-first AI classroom tool for primary school teachers to deliver instruction in Ho, Mundari, and Santhali without prior language training.</p>
+
+    <div class="script-stage">
+      <div class="script-label">tribal greeting & script rotation —</div>
+      <div class="script-word" id="scriptWord" style="font-family:'IBM Plex Sans', serif;">Johar (जोहार)</div>
+    </div>
+
+    <div class="hero-cta">
+      <a href="#preview" class="btn btn-primary">Try Tribal MVP Live</a>
+      <a href="#get-in-touch" class="btn btn-ghost">Read the proposal</a>
+    </div>
+  </div>
+</header>
+
+<!-- INTERACTIVE APP PREVIEW SECTION FOR JHARKHAND TRIBES -->
+<section class="app-preview-section" id="preview">
+  <div class="wrap">
+    <div style="text-align: center; margin-bottom: 24px;">
+      <h2 style="font-size: clamp(28px, 3.5vw, 38px); color: var(--paper);">Jharkhand FLN Translation Suite</h2>
+      <p style="color: #AEB9C6; font-size: 16px; margin-top: 8px;">Translate teacher instructions and NIPUN curriculum into Ho, Mundari, and Santhali.</p>
+    </div>
+
+    <!-- Mode Buttons -->
+    <div class="preview-switcher">
+      <button class="mode-toggle-btn active-mode" id="btnLive" onclick="switchAppMode('live')">🌐 Live Tribal Translation</button>
+      <button class="mode-toggle-btn" id="btnStory" onclick="switchAppMode('story')">📖 Story & Curriculum Mode</button>
+    </div>
+
+    <!-- App Widget Sandbox -->
+    <div class="interactive-app-box">
+      
+      <!-- Live Translation View -->
+      <div class="app-view active-view" id="viewLive">
+        <h3 style="font-size: 20px; color: var(--paper); margin-bottom: 14px;">Live Classroom Voice & Text Translation</h3>
+        <p style="font-size: 14px; color: #AEB9C6; margin-bottom: 20px;">Type phrases like <b>"Hello Sagar"</b>, <b>"numbers"</b>, <b>"water cycle"</b>, or <b>"plants"</b> to test the dictionary.</p>
+        
+        <label style="font-size: 12.5px; color: #7C8BA0; display: block; margin-bottom: 6px;">Teacher Input (FLN Prompt)</label>
+        <textarea id="liveInputText" class="panel-input" rows="3">Hello Sagar</textarea>
+
+        <div style="margin-top: 16px;">
+          <label style="font-size: 12.5px; color: #7C8BA0; display: block; margin-bottom: 6px;">Target Tribal Languages</label>
+          <div class="lang-toggles" id="previewLangToggles">
+            <div class="lang-chip on" onclick="toggleLangChip(this, 'santhali')">Santhali</div>
+            <div class="lang-chip on" onclick="toggleLangChip(this, 'mundari')">Mundari</div>
+            <div class="lang-chip on" onclick="toggleLangChip(this, 'ho')">Ho</div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" style="margin-top: 20px; width: 100%;" onclick="runLiveTranslation()">Translate to Tribal Language</button>
+
+        <div id="livePreviewOutputs" style="margin-top: 20px;"></div>
+      </div>
+
+      <!-- Story Mode View -->
+      <div class="app-view" id="viewStory">
+        <h3 style="font-size: 20px; color: var(--paper); margin-bottom: 14px;">Story Mode — NIPUN Bharat Adaptation</h3>
+        <p style="font-size: 14px; color: #AEB9C6; margin-bottom: 20px;">Test curriculum adaptation using keywords like <i>water cycle</i> or <i>plants</i>.</p>
+
+        <label style="font-size: 12.5px; color: #7C8BA0; display: block; margin-bottom: 6px;">Curriculum Text Segment</label>
+        <textarea id="storyInputText" class="panel-input" rows="3">Hello Sagar, let's study plants.</textarea>
+
+        <div style="display: flex; gap: 16px; align-items: center; margin-top: 16px; flex-wrap: wrap;">
+          <div>
+            <label style="font-size: 12.5px; color: #7C8BA0; display: block; margin-bottom: 6px;">Target Tribal Language</label>
+            <select id="storyTargetLang">
+              <option value="santhali">Santhali</option>
+              <option value="mundari">Mundari</option>
+              <option value="ho">Ho</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" style="margin-top: 20px;" onclick="runStorySimplification()">Generate Localized Worksheet</button>
+        </div>
+
+        <div id="storyPreviewOutput" style="margin-top: 20px;"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="light" id="problem">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Jharkhand classrooms speak native tongues. Standard textbooks only speak one.</h2>
+      <div class="stat-list">
+        <div class="stat-row">
+          <div class="stat-num">01</div>
+          <p><strong>Mother tongue retention</strong> — foundational learning in early primary grades sticks best when taught in Ho, Mundari, and Santhali.</p>
+        </div>
+        <div class="stat-row">
+          <div class="stat-num">02</div>
+          <p><strong>Teacher training gaps</strong> — non-native teachers posted in tribal districts face severe linguistic disconnect during classroom instruction.</p>
+        </div>
+        <div class="stat-row">
+          <div class="stat-num">03</div>
+          <p><strong>Zero internet dependency</strong> — built specifically for rural schools operating on low-cost offline tablets without reliable networks.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="solution">
+  <div class="wrap">
+    <h2 style="font-size:clamp(28px,3.4vw,40px); max-width:20ch; color:var(--paper);">Three layers built for Jharkhand primary schools.</h2>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-mark">1</div>
+        <h3>Real-time voice translation</h3>
+        <p>Teacher speaks Hindi FLN instructions; the offline edge engine converts and speaks it back in Santhali, Mundari, or Ho in under 3 seconds.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-mark">2</div>
+        <h3>NIPUN Bharat worksheets</h3>
+        <p>Auto-generates localized bilingual activity sets and visual flashcards aligned precisely with foundational literacy goals.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-mark">3</div>
+        <h3>Offline SQLite database</h3>
+        <p>Pre-packaged with regional tribal dictionaries and grammar rules requiring zero internet connectivity post-synchronization.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light" id="how">
+  <div class="wrap">
+    <h2 style="font-size:clamp(28px,3.4vw,40px); max-width:22ch;">From a spoken teacher prompt to tribal classroom audio.</h2>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-index">01</div>
+        <h4>Teacher speaks</h4>
+        <p>Hindi FLN classroom sentence.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-index">02</div>
+        <h4>Edge processing</h4>
+        <p>Quantized offline mapping.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-index">03</div>
+        <h4>Dialect match</h4>
+        <p>Ho, Mundari, or Santhali output.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-index">04</div>
+        <h4>Worksheet sync</h4>
+        <p>Bilingual NIPUN templates.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-index">05</div>
+        <h4>Read-along audio</h4>
+        <p>Word-by-word student highlight.</p>
+      </div>
+    </div>
+
+    <div class="demo-frame">
+      <div class="demo-bar">
+        <div class="demo-dot"></div><div class="demo-dot"></div><div class="demo-dot"></div>
+      </div>
+      <div class="demo-body">
+        <div>
+          <div class="demo-col-label">Teacher console</div>
+          <div class="demo-line">"Today we are learning about <span class="demo-highlight">counting numbers</span>."</div>
+          <div class="demo-line dim">→ Santhali, Mundari, Ho — offline sync</div>
+        </div>
+        <div>
+          <div class="demo-col-label">Student Tablet View — Santhali</div>
+          <div class="demo-line">"दिन हिसोब ते <span class="demo-highlight">लेखा जोखा</span> रेयाः।"</div>
+          <div class="demo-line dim">audio synthesized locally on device</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="impact">
+  <div class="wrap">
+    <h2 style="font-size:clamp(28px,3.4vw,40px); max-width:22ch; color:var(--paper);">Engineered for rural Jharkhand deployment.</h2>
+    <div class="impact-grid" style="color:var(--paper);">
+      <div>
+        <div class="impact-num">3</div>
+        <p style="color:#AEB9C6;">core Jharkhand tribal languages supported natively with dedicated script considerations: Santhali, Mundari, and Ho.</p>
+      </div>
+      <div>
+        <div class="impact-num">≤2GB</div>
+        <p style="color:#AEB9C6;">RAM requirement on standard low-cost Android 9+ tablets distributed across district schools.</p>
+      </div>
+      <div>
+        <div class="impact-num">&lt;3s</div>
+        <p style="color:#AEB9C6;">latency ceiling on real-time voice synthesis loops running completely offline.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light" id="roadmap">
+  <div class="wrap">
+    <h2 style="font-size:clamp(28px,3.4vw,40px); max-width:20ch;">Deployment and rollout plan.</h2>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="roadmap">
+      <div class="rm-row">
+        <div class="rm-tag">Phase 1</div>
+        <div><h4>District Pilot</h4><p>Deploy offline tablets in select primary schools across Kolhan and Santhal Pargana divisions with regional educators.</p></div>
+      </div>
+      <div class="rm-row">
+        <div class="rm-tag">Phase 2</div>
+        <div><h4>Corpus Expansion</h4><p>Collaborate with local language experts to expand the embedded SQLite dictionary with advanced math terms.</p></div>
+      </div>
+      <div class="rm-row">
+        <div class="rm-tag">Phase 3</div>
+        <div><h4>Teacher Analytics Dashboard</h4><p>Track student comprehension milestones locally and synchronize logs when network connectivity is detected.</p></div>
+      </div>
+      <div class="rm-row">
+        <div class="rm-tag">Phase 4</div>
+        <div><h4>State Board Integration</h4><p>Official integration with Jharkhand Council of Educational Research and Training (JCERT) primary curriculum frameworks.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="closing" id="get-in-touch">
+  <div class="wrap">
+    <h2>Empowering every child in Jharkhand to learn in their mother tongue.</h2>
+    <p>Bridging the linguistic divide between educators and tribal students with offline-first AI translation software.</p>
+    <div class="hero-cta">
+      <a href="#" class="btn btn-primary">View Technical Dossier</a>
+      <a href="#" class="btn btn-ghost">GitHub Repository</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Bhashantar — Mother-tongue based primary education for Jharkhand</span>
+    <span>Offline-First Android Suite, 2026</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
